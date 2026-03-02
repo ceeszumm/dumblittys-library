@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Track {
+  id              String   @id @default(cuid())
+  title           String
+  artist          String   @default("Dumblitty")
+  type            String   @default("original")
+  year            Int
+  genre           String?
+  bpm             Int?
+  duration        Int      // in seconds
+  audioFilePath   String
+  coverImagePath  String?
+  lyrics          String?    @db.Text
+  originalArtist  String?
+  licenseInfo     String?
+  equipmentUsed   String?
+  recordingStudio String?
+  description     String?    @db.Text
+  isPublished     Boolean  @default(true)
+  playCount       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([type])
+  @@index([year])
+  @@index([genre])
+  @@index([isPublished])
+}
+
+model AboutContent {
+  id          String   @id @default(cuid())
+  title       String   @default("About Dumblitty")
+  bio         String   @default("Welcome to my personal music library. This is where I share my tracks and creative journey.") @db.Text
+  imageUrl    String?
+  socialLinks String?    @db.Text
+  updatedAt   DateTime @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}

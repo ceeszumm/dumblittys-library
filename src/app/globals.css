@@ -1,0 +1,1338 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   RETRO x VINTAGE x STREET ART THEME
+   ======================================== */
+
+@theme inline {
+  /* Primary Colors - Retro Warm Tones */
+  --color-retro-orange: #E85D04;
+  --color-retro-brown: #6B4423;
+  --color-retro-cream: #F5E6D3;
+  --color-retro-gold: #D4A574;
+  --color-retro-rust: #9D4E15;
+  
+  /* Street Art Neon Accents */
+  --color-neon-pink: #FF2D7C;
+  --color-neon-cyan: #00F5FF;
+  --color-neon-yellow: #FFE600;
+  --color-neon-green: #39FF14;
+  --color-neon-purple: #BF00FF;
+  
+  /* Vintage Paper & Texture */
+  --color-vintage-paper: #F4ECD8;
+  --color-vintage-aged: #E8DCC4;
+  --color-vintage-dark: #2D2416;
+  --color-vintage-ink: #1A1410;
+  
+  /* Concrete & Industrial */
+  --color-concrete: #1C1C1C;
+  --color-concrete-dark: #0F0F0F;
+  --color-concrete-light: #2A2A2A;
+  
+  /* Theme Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-retro);
+  --font-mono: var(--font-vintage);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+}
+
+:root {
+  --radius: 0.25rem;
+  
+  /* Retro x Vintage x Street Palette */
+  --retro-orange: #E85D04;
+  --retro-brown: #6B4423;
+  --retro-cream: #F5E6D3;
+  --retro-gold: #D4A574;
+  --retro-rust: #9D4E15;
+  
+  --neon-pink: #FF2D7C;
+  --neon-cyan: #00F5FF;
+  --neon-yellow: #FFE600;
+  --neon-green: #39FF14;
+  --neon-purple: #BF00FF;
+  
+  --vintage-paper: #F4ECD8;
+  --vintage-aged: #E8DCC4;
+  --vintage-dark: #0A0A0A;
+  --vintage-ink: #050505;
+  
+  --concrete: #0C0C0C;
+  --concrete-dark: #050505;
+  --concrete-light: #151515;
+  
+  /* Underground Colors */
+  --underground-dark: #030303;
+  --underground-accent: #0A0A0A;
+  --asphalt: #080808;
+  --night: #020202;
+  
+  /* Semantic Colors - Darker Underground */
+  --background: #080808;
+  --foreground: #F4ECD8;
+  --card: #0F0F0F;
+  --card-foreground: #F4ECD8;
+  --popover: #0F0F0F;
+  --popover-foreground: #F4ECD8;
+  --primary: #E85D04;
+  --primary-foreground: #F4ECD8;
+  --secondary: #00F5FF;
+  --secondary-foreground: #080808;
+  --muted: #1A1A1A;
+  --muted-foreground: #888888;
+  --accent: #FF2D7C;
+  --accent-foreground: #F4ECD8;
+  --destructive: #FF4444;
+  --destructive-foreground: #F4ECD8;
+  --border: #2A2A2A;
+  --input: #1A1A1A;
+  --ring: #E85D04;
+  
+  /* Typography */
+  --font-retro: 'Inter', 'Arial', sans-serif;
+  --font-vintage: 'Courier Prime', 'Courier New', monospace;
+  --font-display: 'Permanent Marker', 'Impact', cursive;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 4px currentColor, 0 0 11px currentColor;
+  }
+  20%, 24%, 55% {
+    opacity: 0.8;
+    text-shadow: none;
+  }
+}
+
+@keyframes vintage-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(232, 93, 4, 0.4),
+                inset 0 0 20px rgba(232, 93, 4, 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 20px 5px rgba(232, 93, 4, 0.2),
+                inset 0 0 30px rgba(232, 93, 4, 0.05);
+  }
+}
+
+@keyframes tape-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes scratch {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+@keyframes vu-dance {
+  0%, 100% { transform: scaleY(0.3); }
+  25% { transform: scaleY(0.8); }
+  50% { transform: scaleY(0.5); }
+  75% { transform: scaleY(1); }
+}
+
+/* ========================================
+   DYNAMIC STREET ANIMATIONS
+   ======================================== */
+
+@keyframes spray-paint {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
+    opacity: 1;
+  }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor, 0 0 25px currentColor, 0 0 40px currentColor;
+    opacity: 0.85;
+  }
+}
+
+@keyframes glitch-text {
+  0% {
+    text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink);
+    transform: translate(0);
+  }
+  20% {
+    text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-pink);
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan);
+    transform: translate(2px, -1px);
+  }
+  60% {
+    text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan);
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink);
+    transform: translate(1px, -2px);
+  }
+  100% {
+    text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink);
+    transform: translate(0);
+  }
+}
+
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes vinyl-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+@keyframes drip {
+  0% {
+    height: 0;
+    opacity: 1;
+  }
+  70% {
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    height: 50px;
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(2deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-5px) rotate(-2deg); }
+}
+
+@keyframes underground-pulse {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
+    transform: scale(1);
+  }
+  50% {
+    filter: brightness(1.1) contrast(1.05);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes tag-appear {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+@keyframes scribble {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+@keyframes neon-sign {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 40px currentColor;
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.7;
+  }
+}
+
+@keyframes street-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-15px); }
+  60% { transform: translateY(-8px); }
+}
+
+@keyframes color-shift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(15deg); }
+}
+
+@keyframes wall-crack {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes stamp {
+  0% {
+    transform: scale(3) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.9) rotate(2deg);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.1) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+@keyframes equalizer {
+  0%, 100% { height: 10px; }
+  50% { height: 40px; }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 45, 124, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 45, 124, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 45, 124, 0);
+  }
+}
+
+@keyframes flip-card {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(180deg);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-retro);
+    background-image: 
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+  
+  .font-vintage {
+    font-family: var(--font-vintage);
+  }
+  
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.animate-neon-flicker {
+  animation: neon-flicker 3s infinite;
+}
+
+.animate-vintage-pulse {
+  animation: vintage-pulse 3s ease-in-out infinite;
+}
+
+.animate-tape-spin {
+  animation: tape-spin 3s linear infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-glitch:hover {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Dynamic Street Animation Classes */
+.animate-spray-paint {
+  animation: spray-paint 0.6s ease-out forwards;
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-glitch-text {
+  animation: glitch-text 0.5s ease-in-out infinite;
+}
+
+.animate-vinyl-spin {
+  animation: vinyl-spin 2s linear infinite;
+}
+
+.animate-vinyl-spin-slow {
+  animation: vinyl-spin-slow 4s linear infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-drip::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(to bottom, currentColor, transparent);
+  border-radius: 0 0 2px 2px;
+  animation: drip 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-underground-pulse {
+  animation: underground-pulse 3s ease-in-out infinite;
+}
+
+.animate-tag-appear {
+  animation: tag-appear 0.5s ease-out forwards;
+}
+
+.animate-scribble {
+  animation: scribble 0.3s ease-in-out infinite;
+}
+
+.animate-neon-sign {
+  animation: neon-sign 3s ease-in-out infinite;
+}
+
+.animate-street-bounce {
+  animation: street-bounce 1s ease-in-out;
+}
+
+.animate-color-shift {
+  animation: color-shift 5s linear infinite;
+}
+
+.animate-stamp {
+  animation: stamp 0.4s ease-out forwards;
+}
+
+.animate-equalizer {
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+.animate-morph {
+  animation: morph 8s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out forwards;
+}
+
+/* ========================================
+   NEON EFFECTS
+   ======================================== */
+
+.neon-glow {
+  text-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 40px currentColor;
+}
+
+.neon-border {
+  border: 2px solid;
+  box-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    inset 0 0 5px currentColor;
+}
+
+.neon-box {
+  box-shadow:
+    0 0 10px rgba(232, 93, 4, 0.5),
+    0 0 20px rgba(232, 93, 4, 0.3),
+    0 0 30px rgba(232, 93, 4, 0.1);
+}
+
+/* ========================================
+   VINTAGE TEXTURES
+   ======================================== */
+
+.vintage-paper {
+  background: 
+    linear-gradient(135deg, rgba(244, 236, 216, 0.1) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(212, 165, 116, 0.1) 0%, transparent 50%);
+}
+
+.vintage-scratches {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L100 100' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3Cpath d='M50 0 L50 100' stroke='rgba(255,255,255,0.01)' stroke-width='0.5'/%3E%3C/svg%3E");
+  animation: scratch 20s linear infinite;
+}
+
+.tape-texture {
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(107, 68, 35, 0.1) 2px,
+      rgba(107, 68, 35, 0.1) 4px
+    ),
+    linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 50%, rgba(0,0,0,0.2) 100%);
+}
+
+.vinyl-grooves {
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 1px,
+    rgba(255, 255, 255, 0.03) 1px,
+    rgba(255, 255, 255, 0.03) 2px
+  );
+}
+
+/* ========================================
+   RETRO COMPONENTS
+   ======================================== */
+
+.retro-card {
+  background: linear-gradient(145deg, #1A1612 0%, #0D0B09 100%);
+  border: 1px solid #3D3020;
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--retro-orange), 
+    var(--retro-gold), 
+    var(--neon-pink),
+    var(--neon-cyan)
+  );
+}
+
+.cassette-body {
+  background: linear-gradient(180deg, #2A2420 0%, #1A1612 100%);
+  border: 2px solid #3D3020;
+  box-shadow: 
+    inset 0 2px 0 rgba(255,255,255,0.05),
+    inset 0 -2px 0 rgba(0,0,0,0.3),
+    0 4px 12px rgba(0,0,0,0.5);
+}
+
+.cassette-window {
+  background: linear-gradient(180deg, #1A1410 0%, #0D0B09 100%);
+  border: 1px solid #2D2416;
+}
+
+.vinyl-body {
+  background: radial-gradient(
+    circle at center,
+    #0D0B09 0%,
+    #1A1410 30%,
+    #0D0B09 60%,
+    #1A1410 80%,
+    #0D0B09 100%
+  );
+}
+
+/* ========================================
+   STREET ART ELEMENTS
+   ======================================== */
+
+.street-tag {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+
+.graffiti-shadow {
+  text-shadow:
+    3px 3px 0 rgba(0,0,0,0.8),
+    -1px -1px 0 rgba(0,0,0,0.8),
+    1px -1px 0 rgba(0,0,0,0.8),
+    -1px 1px 0 rgba(0,0,0,0.8);
+}
+
+.spray-drip::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  width: 3px;
+  height: 15px;
+  background: linear-gradient(to bottom, currentColor, transparent);
+  border-radius: 0 0 2px 2px;
+}
+
+/* ========================================
+   MIXED STYLE COMPONENTS
+   ======================================== */
+
+.music-card {
+  position: relative;
+  background: linear-gradient(145deg, #1A1612 0%, #0D0B09 100%);
+  border: 1px solid #3D3020;
+  transition: all 0.3s ease;
+}
+
+.music-card:hover {
+  border-color: var(--retro-orange);
+  box-shadow: 
+    0 0 20px rgba(232, 93, 4, 0.2),
+    0 0 40px rgba(255, 45, 124, 0.1);
+  transform: translateY(-2px);
+}
+
+.music-card.active {
+  border-color: var(--neon-pink);
+  box-shadow: 
+    0 0 15px rgba(255, 45, 124, 0.4),
+    0 0 30px rgba(255, 45, 124, 0.2);
+}
+
+/* Player Style */
+.player-body {
+  background: 
+    linear-gradient(180deg, #2A2420 0%, #1A1612 50%, #0D0B09 100%);
+  border-top: 3px solid;
+  border-image: linear-gradient(90deg, var(--retro-orange), var(--neon-pink), var(--neon-cyan)) 1;
+}
+
+/* VU Meter */
+.vu-bar {
+  background: linear-gradient(
+    to top,
+    var(--neon-green) 0%,
+    var(--neon-green) 60%,
+    var(--neon-yellow) 60%,
+    var(--neon-yellow) 80%,
+    var(--neon-pink) 80%,
+    var(--neon-pink) 100%
+  );
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--concrete-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--retro-orange), var(--neon-pink));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-pink), var(--neon-cyan));
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+
+::selection {
+  background: var(--neon-pink);
+  color: var(--vintage-paper);
+}
+
+/* ========================================
+   FORM STYLES
+   ======================================== */
+
+.retro-input {
+  background: rgba(26, 20, 18, 0.8);
+  border: 1px solid #3D3020;
+  color: var(--vintage-paper);
+  transition: all 0.2s ease;
+}
+
+.retro-input:focus {
+  border-color: var(--retro-orange);
+  box-shadow: 0 0 10px rgba(232, 93, 4, 0.3);
+}
+
+.retro-input::placeholder {
+  color: rgba(244, 236, 216, 0.4);
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+
+.btn-retro {
+  background: linear-gradient(145deg, var(--retro-orange), var(--retro-rust));
+  color: var(--vintage-paper);
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-retro:hover {
+  background: linear-gradient(145deg, var(--neon-pink), var(--neon-purple));
+  box-shadow: 0 0 20px rgba(255, 45, 124, 0.4);
+}
+
+.btn-street {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   DECORATIVE ELEMENTS
+   ======================================== */
+
+.corner-tag {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  padding: 2px 8px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  background: var(--neon-yellow);
+  color: var(--vintage-dark);
+  transform: rotate(3deg);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.year-badge {
+  background: var(--retro-gold);
+  color: var(--vintage-dark);
+  font-family: var(--font-vintage);
+  font-weight: bold;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+}
+
+.genre-tag {
+  background: rgba(232, 93, 4, 0.2);
+  border: 1px solid var(--retro-orange);
+  color: var(--retro-orange);
+  padding: 2px 10px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   STREET ART DECORATIONS
+   ======================================== */
+
+.graffiti-border {
+  position: relative;
+  border: 3px solid transparent;
+  background: 
+    linear-gradient(#1A1612, #1A1612) padding-box,
+    linear-gradient(135deg, var(--neon-pink), var(--neon-cyan), var(--neon-yellow), var(--neon-green)) border-box;
+}
+
+.street-stamp {
+  position: relative;
+  background: var(--neon-pink);
+  color: white;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  padding: 4px 12px;
+  transform: rotate(-3deg);
+  box-shadow: 
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.street-stamp::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+.underground-badge {
+  background: linear-gradient(135deg, var(--concrete-dark), var(--concrete));
+  border: 2px solid var(--retro-orange);
+  color: var(--neon-yellow);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  overflow: hidden;
+}
+
+.underground-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: scratch 3s linear infinite;
+}
+
+.spray-effect {
+  position: relative;
+}
+
+.spray-effect::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 45, 124, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(0, 245, 255, 0.3) 0%, transparent 50%);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.spray-effect:hover::before {
+  opacity: 1;
+}
+
+.brick-pattern {
+  background-image: 
+    linear-gradient(90deg, transparent 49%, rgba(61, 48, 32, 0.3) 49%, rgba(61, 48, 32, 0.3) 51%, transparent 51%),
+    linear-gradient(rgba(61, 48, 32, 0.3) 1px, transparent 1px);
+  background-size: 50px 25px;
+}
+
+.concrete-texture {
+  background: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #1C1C1C 0%, #141414 100%);
+}
+
+.vinyl-record {
+  background: 
+    radial-gradient(circle at center, #1A1410 0%, #1A1410 15%, transparent 15%),
+    radial-gradient(circle at center, #0D0B09 0%, #0D0B09 18%, transparent 18%),
+    repeating-radial-gradient(
+      circle at center,
+      transparent 0px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 2px,
+      rgba(255, 255, 255, 0.03) 3px
+    ),
+    radial-gradient(circle at center, #1A1410 0%, #0D0B09 100%);
+}
+
+.vinyl-label {
+  background: radial-gradient(circle at center, var(--retro-rust) 0%, var(--retro-brown) 50%, var(--vintage-dark) 100%);
+  border: 2px solid var(--retro-gold);
+}
+
+.neon-border-pink {
+  border: 2px solid var(--neon-pink);
+  box-shadow: 
+    0 0 10px var(--neon-pink),
+    0 0 20px rgba(255, 45, 124, 0.5),
+    inset 0 0 10px rgba(255, 45, 124, 0.2);
+}
+
+.neon-border-cyan {
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 
+    0 0 10px var(--neon-cyan),
+    0 0 20px rgba(0, 245, 255, 0.5),
+    inset 0 0 10px rgba(0, 245, 255, 0.2);
+}
+
+.neon-border-orange {
+  border: 2px solid var(--retro-orange);
+  box-shadow: 
+    0 0 10px var(--retro-orange),
+    0 0 20px rgba(232, 93, 4, 0.5),
+    inset 0 0 10px rgba(232, 93, 4, 0.2);
+}
+
+/* ========================================
+   VINYL DISC STYLES
+   ======================================== */
+
+.vinyl-disc {
+  position: relative;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at center, #2D2416 0%, #2D2416 12%, transparent 12%),
+    radial-gradient(circle at center, #1A1410 0%, #1A1410 15%, transparent 15%),
+    repeating-radial-gradient(
+      circle at center,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(255, 255, 255, 0.02) 1.5px,
+      rgba(255, 255, 255, 0.02) 3px
+    ),
+    radial-gradient(circle at center, #1A1410 0%, #0D0B09 100%);
+  box-shadow: 
+    0 0 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl-disc::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--retro-rust) 0%, var(--retro-brown) 60%, var(--vintage-dark) 100%);
+  border: 1px solid var(--retro-gold);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.vinyl-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5%;
+  height: 5%;
+  border-radius: 50%;
+  background: #0D0B09;
+  border: 1px solid #3D3020;
+}
+
+/* Spinning vinyl with glow */
+.vinyl-spinning {
+  animation: vinyl-spin 2s linear infinite;
+  box-shadow: 
+    0 0 30px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(232, 93, 4, 0.2),
+    inset 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   INTERACTIVE CARD FLIP
+   ======================================== */
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: inherit;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* ========================================
+   TRACK MODAL STYLES
+   ======================================== */
+
+.track-modal-overlay {
+  background: rgba(13, 11, 9, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.track-modal-content {
+  background: 
+    linear-gradient(145deg, rgba(26, 22, 18, 0.98) 0%, rgba(13, 11, 9, 0.98) 100%);
+  border: 1px solid #3D3020;
+  box-shadow: 
+    0 0 50px rgba(232, 93, 4, 0.2),
+    0 0 100px rgba(255, 45, 124, 0.1);
+}
+
+.lyrics-container {
+  background: 
+    linear-gradient(180deg, transparent 0%, rgba(13, 11, 9, 0.8) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 23px,
+      rgba(232, 93, 4, 0.1) 23px,
+      rgba(232, 93, 4, 0.1) 24px
+    );
+  font-family: var(--font-vintage);
+}
+
+/* ========================================
+   EQUALIZER BARS
+   ======================================== */
+
+.eq-bar {
+  width: 4px;
+  background: linear-gradient(
+    to top,
+    var(--neon-green) 0%,
+    var(--neon-green) 60%,
+    var(--neon-yellow) 60%,
+    var(--neon-yellow) 80%,
+    var(--neon-pink) 80%,
+    var(--neon-pink) 100%
+  );
+  border-radius: 2px;
+}
+
+.eq-bar:nth-child(1) { animation: equalizer 0.8s ease-in-out infinite; }
+.eq-bar:nth-child(2) { animation: equalizer 0.7s ease-in-out infinite 0.1s; }
+.eq-bar:nth-child(3) { animation: equalizer 0.9s ease-in-out infinite 0.2s; }
+.eq-bar:nth-child(4) { animation: equalizer 0.6s ease-in-out infinite 0.15s; }
+.eq-bar:nth-child(5) { animation: equalizer 0.75s ease-in-out infinite 0.25s; }
+
+/* ========================================
+   UNDERGROUND DARK THEME OVERRIDES
+   ======================================== */
+
+.section-dark {
+  background: linear-gradient(180deg, #050505 0%, #080808 50%, #030303 100%);
+}
+
+.graffiti-wall {
+  position: relative;
+  background: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #050505 0%, #0A0A0A 100%);
+}
+
+/* ========================================
+   GRAFFITI TEXT STYLES
+   ======================================== */
+
+.graffiti-text-pink {
+  color: var(--neon-pink);
+  text-shadow: 
+    3px 3px 0 rgba(0,0,0,0.8),
+    0 0 20px rgba(255, 45, 124, 0.5),
+    0 0 40px rgba(255, 45, 124, 0.3);
+}
+
+.graffiti-text-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 
+    3px 3px 0 rgba(0,0,0,0.8),
+    0 0 20px rgba(0, 245, 255, 0.5),
+    0 0 40px rgba(0, 245, 255, 0.3);
+}
+
+.graffiti-text-yellow {
+  color: var(--neon-yellow);
+  text-shadow: 
+    3px 3px 0 rgba(0,0,0,0.8),
+    0 0 20px rgba(255, 230, 0, 0.5),
+    0 0 40px rgba(255, 230, 0, 0.3);
+}
+
+/* ========================================
+   PAINT SPLATTER EFFECTS
+   ======================================== */
+
+.paint-splatter {
+  position: relative;
+}
+
+.paint-splatter::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 45, 124, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 30%, rgba(0, 245, 255, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 40% 80%, rgba(255, 230, 0, 0.12) 0%, transparent 30%),
+    radial-gradient(circle at 90% 90%, rgba(57, 255, 20, 0.08) 0%, transparent 25%);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* ========================================
+   WALL CRACKS
+   ======================================== */
+
+.wall-cracks {
+  position: relative;
+}
+
+.wall-cracks::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 L30 45 L50 60 L70 40 L100 50' stroke='rgba(255,255,255,0.03)' fill='none' stroke-width='0.5'/%3E%3Cpath d='M20 0 L25 30 L15 60 L30 100' stroke='rgba(255,255,255,0.02)' fill='none' stroke-width='0.3'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ========================================
+   STREET SIGN STYLES
+   ======================================== */
+
+.sign-danger {
+  background: #CC0000;
+  border: 3px solid white;
+  color: white;
+}
+
+.sign-warning {
+  background: #FFCC00;
+  border: 3px solid black;
+  color: black;
+}
+
+.sign-prohibited {
+  background: white;
+  border: 3px solid #CC0000;
+  border-radius: 50%;
+  color: #CC0000;
+}
+
+/* ========================================
+   DRIP ANIMATIONS
+   ======================================== */
+
+.drip-pink {
+  background: linear-gradient(to bottom, var(--neon-pink), transparent);
+  animation: drip 3s ease-in-out infinite;
+}
+
+.drip-cyan {
+  background: linear-gradient(to bottom, var(--neon-cyan), transparent);
+  animation: drip 3s ease-in-out infinite 0.5s;
+}
+
+.drip-yellow {
+  background: linear-gradient(to bottom, var(--neon-yellow), transparent);
+  animation: drip 3s ease-in-out infinite 1s;
+}
+
+/* ========================================
+   REBEL BADGE
+   ======================================== */
+
+.rebel-badge {
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  border: 2px solid var(--neon-pink);
+  color: var(--neon-pink);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  position: relative;
+  overflow: hidden;
+}
+
+.rebel-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,45,124,0.2), transparent);
+  animation: scratch 2s linear infinite;
+}
+
+/* ========================================
+   SECTION SPECIFIC GRAFFITI
+   ======================================== */
+
+.hero-graffiti {
+  position: absolute;
+  font-family: var(--font-display);
+  pointer-events: none;
+  select: none;
+}
+
+.library-graffiti {
+  position: absolute;
+  font-family: var(--font-display);
+  pointer-events: none;
+  select: none;
+}
+
+.about-graffiti {
+  position: absolute;
+  font-family: var(--font-display);
+  pointer-events: none;
+  select: none;
+}
+
+.contact-graffiti {
+  position: absolute;
+  font-family: var(--font-display);
+  pointer-events: none;
+  select: none;
+}
+
+/* ========================================
+   NOISE OVERLAY
+   ======================================== */
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ========================================
+   GLITCH EFFECTS
+   ======================================== */
+
+.glitch-container {
+  position: relative;
+}
+
+.glitch-container::before,
+.glitch-container::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-container::before {
+  color: var(--neon-cyan);
+  animation: glitch 0.5s ease-in-out infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-2px, -2px);
+}
+
+.glitch-container::after {
+  color: var(--neon-pink);
+  animation: glitch 0.5s ease-in-out infinite reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  transform: translate(2px, 2px);
+}
