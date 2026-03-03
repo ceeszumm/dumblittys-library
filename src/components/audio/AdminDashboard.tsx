@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { X, Save, Trash2, Edit, Plus, Music, Image as ImageIcon, FileAudio, Upload, Loader2 } from "lucide-react";
-import { upload } from "@vercel/blob/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,40 +136,48 @@ export function AdminDashboard({
     }
   };
 
-  // Real file upload handler - client-side direct upload to Vercel Blob
+  // File upload handler - server-side upload via API
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "audio" | "cover") => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Check file size (4MB limit for server upload)
+    const maxSize = 4 * 1024 * 1024; // 4MB
+    if (file.size > maxSize) {
+      toast.error(`File too large! Max 4MB. Your file: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      return;
+    }
+
     setIsUploading(type);
 
     try {
-      // Use Vercel Blob client-side upload for large files
-      const newBlob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/upload-auth",
-        onUploadProgress: (progress) => {
-          console.log(`Upload progress: ${progress.percentage}%`);
-        },
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+      uploadFormData.append("type", type);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: uploadFormData,
       });
 
-      if (newBlob.url) {
+      const data = await response.json();
+
+      if (data.success && data.url) {
         if (type === "audio") {
-          setFormData({ ...formData, audioFilePath: newBlob.url });
+          setFormData({ ...formData, audioFilePath: data.url });
           toast.success(`Audio uploaded! 🎧 ${file.name}`);
         } else {
-          setFormData({ ...formData, coverImagePath: newBlob.url });
+          setFormData({ ...formData, coverImagePath: data.url });
           toast.success(`Cover uploaded! 🖼️ ${file.name}`);
         }
       } else {
-        throw new Error("Upload failed - no URL returned");
+        throw new Error(data.error || "Upload failed");
       }
     } catch (error) {
       console.error("Upload error:", error);
       toast.error("Failed to upload file");
     } finally {
       setIsUploading(null);
-      // Reset input
       if (type === "audio" && audioInputRef.current) {
         audioInputRef.current.value = "";
       }
