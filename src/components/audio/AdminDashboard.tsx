@@ -1,5 +1,6 @@
 "use client";
 
+import { upload } from "@vercel/blob/client";
 import { useState, useRef } from "react";
 import { X, Save, Trash2, Edit, Plus, Music, Image as ImageIcon, FileAudio, Upload, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -135,48 +136,35 @@ export function AdminDashboard({
 
   // Real file upload handler
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "audio" | "cover") => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-    setIsUploading(type);
+  setIsUploading(type);
 
-    try {
-      const uploadFormData = new FormData();
-      uploadFormData.append("file", file);
-      uploadFormData.append("type", type);
+  try {
+    const newBlob = await upload(file.name, file, {
+      access: "public",
+      handleUploadUrl: "/api/upload-auth",
+    });
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: uploadFormData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        if (type === "audio") {
-          setFormData({ ...formData, audioFilePath: data.url });
-          toast.success(`Audio uploaded! 🎧 ${file.name}`);
-        } else {
-          setFormData({ ...formData, coverImagePath: data.url });
-          toast.success(`Cover uploaded! 🖼️ ${file.name}`);
-        }
+    if (newBlob.url) {
+      if (type === "audio") {
+        setFormData({ ...formData, audioFilePath: newBlob.url });
+        toast.success(`Audio uploaded! 🎧 ${file.name}`);
       } else {
-        throw new Error(data.error || "Upload failed");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      toast.error("Failed to upload file");
-    } finally {
-      setIsUploading(null);
-      // Reset input
-      if (type === "audio" && audioInputRef.current) {
-        audioInputRef.current.value = "";
-      }
-      if (type === "cover" && coverInputRef.current) {
-        coverInputRef.current.value = "";
+        setFormData({ ...formData, coverImagePath: newBlob.url });
+        toast.success(`Cover uploaded! 🖼️ ${file.name}`);
       }
     }
-  };
+  } catch (error) {
+    console.error("Upload error:", error);
+    toast.error("Failed to upload file");
+  } finally {
+    setIsUploading(null);
+    if (type === "audio" && audioInputRef.current) audioInputRef.current.value = "";
+    if (type === "cover" && coverInputRef.current) coverInputRef.current.value = "";
+  }
+};
 
   if (!isOpen) return null;
 
