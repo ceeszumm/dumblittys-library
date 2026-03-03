@@ -1,8 +1,8 @@
 "use client";
 
-import { upload } from "@vercel/blob/client";
 import { useState, useRef } from "react";
 import { X, Save, Trash2, Edit, Plus, Music, Image as ImageIcon, FileAudio, Upload, Loader2 } from "lucide-react";
+import { upload } from "@vercel/blob/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,6 +55,7 @@ export function AdminDashboard({
     equipmentUsed: "",
     recordingStudio: "",
     description: "",
+    lyrics: "",
   });
 
   const resetForm = () => {
@@ -72,6 +73,7 @@ export function AdminDashboard({
       equipmentUsed: "",
       recordingStudio: "",
       description: "",
+      lyrics: "",
     });
     setIsEditing(null);
   };
@@ -116,6 +118,7 @@ export function AdminDashboard({
       equipmentUsed: track.equipmentUsed || "",
       recordingStudio: track.recordingStudio || "",
       description: track.description || "",
+      lyrics: track.lyrics || "",
     });
   };
 
@@ -134,37 +137,48 @@ export function AdminDashboard({
     }
   };
 
-  // Real file upload handler
+  // Real file upload handler - client-side direct upload to Vercel Blob
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "audio" | "cover") => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  setIsUploading(type);
+    setIsUploading(type);
 
-  try {
-    const newBlob = await upload(file.name, file, {
-      access: "public",
-      handleUploadUrl: "/api/upload-auth",
-    });
+    try {
+      // Use Vercel Blob client-side upload for large files
+      const newBlob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/upload-auth",
+        onUploadProgress: (progress) => {
+          console.log(`Upload progress: ${progress.percentage}%`);
+        },
+      });
 
-    if (newBlob.url) {
-      if (type === "audio") {
-        setFormData({ ...formData, audioFilePath: newBlob.url });
-        toast.success(`Audio uploaded! 🎧 ${file.name}`);
+      if (newBlob.url) {
+        if (type === "audio") {
+          setFormData({ ...formData, audioFilePath: newBlob.url });
+          toast.success(`Audio uploaded! 🎧 ${file.name}`);
+        } else {
+          setFormData({ ...formData, coverImagePath: newBlob.url });
+          toast.success(`Cover uploaded! 🖼️ ${file.name}`);
+        }
       } else {
-        setFormData({ ...formData, coverImagePath: newBlob.url });
-        toast.success(`Cover uploaded! 🖼️ ${file.name}`);
+        throw new Error("Upload failed - no URL returned");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload file");
+    } finally {
+      setIsUploading(null);
+      // Reset input
+      if (type === "audio" && audioInputRef.current) {
+        audioInputRef.current.value = "";
+      }
+      if (type === "cover" && coverInputRef.current) {
+        coverInputRef.current.value = "";
       }
     }
-  } catch (error) {
-    console.error("Upload error:", error);
-    toast.error("Failed to upload file");
-  } finally {
-    setIsUploading(null);
-    if (type === "audio" && audioInputRef.current) audioInputRef.current.value = "";
-    if (type === "cover" && coverInputRef.current) coverInputRef.current.value = "";
-  }
-};
+  };
 
   if (!isOpen) return null;
 
